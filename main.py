@@ -68,40 +68,35 @@ class PredictResponse(BaseModel):
     predictions: List[float]
     stds: Optional[List[float]] = None
 
-# ── 参数网格（针对小样本优化，减少搜索空间）──────────────────────
+# ── 参数网格（针对小样本和 Railway 免费版优化，减少搜索空间）──────────────────────
 
 GPR_PARAM_GRID = {
-    "kernel_type": ["rbf", "matern"],
-    "length_scale": [0.1, 1.0, 3.0],
-    "constant_value": [1.0, 3.0],
-    "alpha": [1e-4, 1e-3, 1e-2],
-    "matern_nu": [1.5, 2.5],
+    "kernel_type": ["rbf"],
+    "length_scale": [0.5, 2.0],
+    "constant_value": [1.0],
+    "alpha": [1e-3],
 }
 
 RF_PARAM_GRID = {
-    "n_estimators": [200, 400],
-    "max_depth": [None, 5, 7],
-    "min_samples_split": [2, 4],
-    "min_samples_leaf": [1, 2],
-    "max_features": [1.0, "sqrt"],
-    "bootstrap": [True],
+    "n_estimators": [100],
+    "max_depth": [5, None],
+    "min_samples_split": [2],
+    "min_samples_leaf": [1],
+    "max_features": [1.0],
 }
 
 SVM_PARAM_GRID = {
-    "kernel": ["rbf", "linear"],
+    "kernel": ["rbf"],
     "C": [1.0, 10.0],
-    "gamma": ["scale", 0.1],
-    "epsilon": [0.05, 0.1],
+    "gamma": ["scale"],
+    "epsilon": [0.1],
 }
 
 XGB_PARAM_GRID = {
-    "n_estimators": [200, 400],
+    "n_estimators": [100],
     "max_depth": [2, 4],
-    "learning_rate": [0.03, 0.1],
-    "min_child_weight": [1.0, 3.0],
-    "gamma": [0.0, 0.2],
-    "reg_alpha": [0.0, 0.2],
-    "reg_lambda": [1.0, 5.0],
+    "learning_rate": [0.1],
+    "min_child_weight": [1.0],
 }
 
 # ── 训练函数 ──────────────────────────────────────────────────────
